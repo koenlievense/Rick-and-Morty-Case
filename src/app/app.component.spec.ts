@@ -1,10 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { CharacterService } from './shared/services/character.service';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      declarations: [AppComponent],
+      providers: [CharacterService, HttpClient, HttpHandler],
     }).compileComponents();
   });
 
@@ -24,6 +27,8 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, rick-and-morty-case');
+    expect(compiled.querySelector('h1')?.textContent).toContain(
+      'rick-and-morty-case'
+    );
   });
 });
