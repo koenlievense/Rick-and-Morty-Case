@@ -1,1 +1,11 @@
-<h1>{{ title }}</h1>
+<header class="flex p-2 justify-center gap-6">
+  <button class="text-2xl" (click)="selectTab(0)">Characters</button>
+  <button class="text-2xl" (click)="selectTab(1)">Locations</button>
+  <button class="text-2xl" (click)="selectTab(2)">Episodes</button>
+</header>
+
+<div class="p-6">
+  <div *ngIf="selectedTab === 0"><character-list></character-list></div>
+  <div *ngIf="selectedTab === 1"><location-list></location-list></div>
+  <div *ngIf="selectedTab === 2"><episode-list></episode-list></div>
+</div>
