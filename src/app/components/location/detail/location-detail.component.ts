@@ -58,6 +58,6 @@ export class LocationDetailComponent {
   }
 
   goBack() {
-    this.router.navigate(['/episodes']);
+    this.router.navigate(['/locations']);
   }
 }
