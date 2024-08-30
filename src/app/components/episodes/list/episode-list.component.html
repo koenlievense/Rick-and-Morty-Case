@@ -6,3 +6,9 @@
     ></app-episode-list-item>
   </ng-container>
 </div>
+
+<app-pagination
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChange)="onPageChange($event)"
+></app-pagination>
