@@ -1,5 +1,8 @@
 <div class="flex">
   <ng-container *ngFor="let episode of episodes">
-    <episode-list-item [episode]="episode"></episode-list-item>
+    <app-episode-list-item
+      [episode]="episode"
+      (click)="navigate(episode.id)"
+    ></app-episode-list-item>
   </ng-container>
 </div>
