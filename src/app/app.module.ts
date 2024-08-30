@@ -11,16 +11,22 @@ import { EpisodeListComponent } from './components/episodes/list/episode-list.co
 import { CharacterListItemComponent } from './components/character/list/list-item/character-list-item.component';
 import { LocationListItemComponent } from './components/location/list/list-item/location-list-item.component';
 import { EpisodeListItemComponent } from './components/episodes/list/list-item/episode-list-item.component';
+import { HeaderComponent } from './components/header/header.component';
+import { LocationDetailComponent } from './components/location/detail/location-detail.component';
+import { EpisodeDetailComponent } from './components/episodes/detail/episode-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
     CharacterListComponent,
     CharacterListItemComponent,
     LocationListComponent,
     LocationListItemComponent,
+    LocationDetailComponent,
     EpisodeListComponent,
     EpisodeListItemComponent,
+    EpisodeDetailComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
