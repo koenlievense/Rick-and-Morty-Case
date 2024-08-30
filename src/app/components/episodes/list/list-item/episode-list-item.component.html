@@ -1,1 +1,14 @@
-{{ episode.name }}
+<div
+  class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden m-3 w-auto lg:w-56 cursor-pointer hover:opacity-70"
+>
+  <div class="p-4">
+    <h2 class="text-xl font-bold text-gray-800">{{ episode.name }}</h2>
+    <p class="text-gray-600"><strong>Episode:</strong> {{ episode.episode }}</p>
+    <p class="text-gray-600">
+      <strong>Air Date:</strong> {{ episode.air_date }}
+    </p>
+    <p class="text-gray-600">
+      <strong>Characters:</strong> {{ episode.characters.length }}
+    </p>
+  </div>
+</div>
