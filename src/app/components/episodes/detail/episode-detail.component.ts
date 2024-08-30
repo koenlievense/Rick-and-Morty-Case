@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CharacterService } from '../../../shared/services/character.service';
 import { Character } from '../../../shared/interfaces/character';
 import { EpisodeService } from '../../../shared/services/episode.service';
+import { Episode } from '../../../shared/interfaces/episode';
 
 @Component({
   selector: 'app-episode-detail',
@@ -10,12 +11,14 @@ import { EpisodeService } from '../../../shared/services/episode.service';
 })
 export class EpisodeDetailComponent {
   characters: Character[] = [];
+  episode: Episode;
   episodeId: number | null = null;
 
   constructor(
     private episodeService: EpisodeService,
     private characterService: CharacterService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -27,6 +30,8 @@ export class EpisodeDetailComponent {
         this.episodeService
           .fetchEpisodeById(this.episodeId)
           .subscribe((episode) => {
+            this.episode = episode;
+
             const ids = episode.characters.map((c) => {
               const match = c.match(/\d+$/)!;
               return parseInt(match[0], 10);
@@ -50,5 +55,9 @@ export class EpisodeDetailComponent {
           });
       }
     });
+  }
+
+  goBack() {
+    this.router.navigate(['/episodes']);
   }
 }

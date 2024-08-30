@@ -1,9 +1,30 @@
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-  <ng-container *ngFor="let character of characters">
-    <app-character-list-item [character]="character"></app-character-list-item>
-  </ng-container>
-
-  <ng-container *ngIf="characters.length === 0">
-    No characters found!
-  </ng-container>
+<div class="grid grid-cols-3 items-center mb-6" *ngIf="episode">
+  <div class="flex">
+    <button
+      class="back-button px-4 py-2 bg-gray-300 text-gray-700 rounded"
+      (click)="goBack()"
+    >
+      Back
+    </button>
+  </div>
+  <div class="flex justify-center">
+    <span class="text-2xl">
+      {{ episode.name }}
+    </span>
+  </div>
 </div>
+
+<ng-container *ngIf="characters.length > 0; else noCharacters">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <ng-container *ngFor="let character of characters">
+      <app-character-list-item
+        class="flex justify-center"
+        [character]="character"
+      ></app-character-list-item>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #noCharacters>
+  <img src="/src/assets/not-found.png" />
+</ng-template>
