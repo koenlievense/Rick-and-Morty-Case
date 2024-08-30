@@ -2,4 +2,8 @@
   <ng-container *ngFor="let character of characters">
     <app-character-list-item [character]="character"></app-character-list-item>
   </ng-container>
+
+  <ng-container *ngIf="characters.length === 0">
+    No characters found!
+  </ng-container>
 </div>

@@ -32,11 +32,21 @@ export class EpisodeDetailComponent {
               return parseInt(match[0], 10);
             });
 
-            this.characterService
-              .fetchCharactersByIds(ids)
-              .subscribe((characters) => {
-                this.characters = characters;
-              });
+            if (ids.length > 0) {
+              this.characterService
+                .fetchCharactersByIds(ids)
+                .subscribe((characters) => {
+                  if (Array.isArray(characters)) {
+                    this.characters = characters;
+                  } else if (characters && typeof characters === 'object') {
+                    this.characters = [characters];
+                  } else {
+                    this.characters = [];
+                  }
+                });
+            } else {
+              this.characters = [];
+            }
           });
       }
     });
