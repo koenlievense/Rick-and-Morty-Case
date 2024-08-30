@@ -1,5 +1,8 @@
 <div class="flex">
   <ng-container *ngFor="let location of locations">
-    <location-list-item [location]="location"></location-list-item>
+    <app-location-list-item
+      [location]="location"
+      (click)="navigate(location.id)"
+    ></app-location-list-item>
   </ng-container>
 </div>
