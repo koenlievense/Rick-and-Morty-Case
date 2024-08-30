@@ -1,6 +1,9 @@
-<div class="flex">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
   <ng-container *ngFor="let character of characters">
-    <app-character-list-item [character]="character"></app-character-list-item>
+    <app-character-list-item
+      class="flex justify-center"
+      [character]="character"
+    ></app-character-list-item>
   </ng-container>
 </div>
 
