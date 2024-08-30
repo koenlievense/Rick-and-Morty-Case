@@ -14,6 +14,7 @@ import { EpisodeListItemComponent } from './components/episodes/list/list-item/e
 import { HeaderComponent } from './components/header/header.component';
 import { LocationDetailComponent } from './components/location/detail/location-detail.component';
 import { EpisodeDetailComponent } from './components/episodes/detail/episode-detail.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { EpisodeDetailComponent } from './components/episodes/detail/episode-det
     EpisodeListComponent,
     EpisodeListItemComponent,
     EpisodeDetailComponent,
+    PaginationComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],

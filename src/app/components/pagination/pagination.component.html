@@ -1,0 +1,9 @@
+<div class="flex mt-6 gap-2">
+  <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">
+    Vorige
+  </button>
+  <span>{{ currentPage }} van {{ totalPages }}</span>
+  <button (click)="goToNextPage()" [disabled]="currentPage === totalPages">
+    Volgende
+  </button>
+</div>
