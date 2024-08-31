@@ -1,9 +1,11 @@
 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-  <ng-container *ngFor="let dimension of dimensions">
-    <app-dimension-list-item
-      class="flex justify-center"
-      [dimension]="dimension"
-      (click)="navigate(dimension.name)"
-    ></app-dimension-list-item
-  ></ng-container>
+  <ng-container *ngIf="dimensions$ | async as dimensions">
+    <ng-container *ngFor="let dimension of dimensions">
+      <app-dimension-list-item
+        class="flex justify-center"
+        [dimension]="dimension"
+        (click)="navigate(dimension.name)"
+      ></app-dimension-list-item>
+    </ng-container>
+  </ng-container>
 </div>

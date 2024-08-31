@@ -4,13 +4,14 @@ import { CharacterService } from '../../../shared/services/character.service';
 import { Character } from '../../../shared/interfaces/character';
 import { Dimension } from '../../../shared/interfaces/dimension';
 import { DimensionService } from '../../../shared/services/dimension.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dimension-detail',
   templateUrl: './dimension-detail.component.html',
 })
 export class DimensionDetailComponent {
-  dimensions: Dimension[] = [];
+  dimensions$: Observable<Dimension[]>;
   dimension: Dimension | undefined;
   characters: Character[] = [];
   charactersIdList: number[] = [];
@@ -26,43 +27,43 @@ export class DimensionDetailComponent {
 
   ngOnInit(): void {
     this.loading = true;
-    this.dimensions = this.dimensionService.loadDimensions(this.currentPage);
 
-    if (this.dimensions) {
+    this.dimensions$ = this.dimensionService.loadDimensions(this.currentPage);
+
+    this.dimensions$.subscribe((dimensions) => {
       this.route.paramMap.subscribe((params) => {
         const nameParam = params.get('name');
-        this.dimension = this.dimensions.find(
+        this.dimension = dimensions.find(
           (dimension) =>
             dimension.name.toLowerCase().replace(' ', '-') === nameParam
         );
 
         if (this.dimension) {
-          for (let id of this.dimension?.characters.values()) {
-            this.charactersIdList.push(id);
+          this.charactersIdList = Array.from(this.dimension.characters);
+
+          if (this.charactersIdList.length !== 0) {
+            this.characterService
+              .fetchCharactersByIds(this.charactersIdList)
+              .subscribe((characters) => {
+                if (Array.isArray(characters)) {
+                  this.characters = characters;
+                } else if (characters && typeof characters === 'object') {
+                  this.characters = [characters];
+                } else {
+                  this.characters = [];
+                }
+
+                this.loading = false;
+              });
+          } else {
+            this.loading = false;
           }
-        }
-
-        if (this.dimension && this.charactersIdList.length !== 0) {
-          this.characterService
-            .fetchCharactersByIds(this.charactersIdList)
-            .subscribe((characters) => {
-              if (Array.isArray(characters)) {
-                this.characters = characters;
-              } else if (characters && typeof characters === 'object') {
-                this.characters = [characters];
-              } else {
-                this.characters = [];
-              }
-
-              this.loading = false;
-            });
         } else {
           this.loading = false;
         }
       });
-    }
+    });
   }
-
   goBack() {
     this.router.navigate(['/dimensions']);
   }
