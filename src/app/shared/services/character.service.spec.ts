@@ -43,7 +43,7 @@ describe('CharacterService', () => {
     httpMock.verify();
   });
 
-  it('should be created', () => {
+  it('should create a service', () => {
     expect(service).toBeTruthy();
   });
 

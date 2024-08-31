@@ -1,0 +1,19 @@
+<div class="flex justify-center items-center mt-6">
+  <button
+    class="px-4 py-2 mr-2 bg-gray-300 text-gray-700 rounded disabled:opacity-50"
+    (click)="goToPreviousPage()"
+    [disabled]="currentPage === 1"
+  >
+    Previous
+  </button>
+  <span class="text-gray-700 mx-4"
+    >Page {{ currentPage }} of {{ totalPages }}</span
+  >
+  <button
+    class="px-4 py-2 ml-2 bg-gray-300 text-gray-700 rounded disabled:opacity-50"
+    (click)="goToNextPage()"
+    [disabled]="currentPage === totalPages"
+  >
+    Next
+  </button>
+</div>

@@ -1,0 +1,15 @@
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+  <ng-container *ngFor="let location of locations">
+    <app-location-list-item
+      class="flex justify-center"
+      [location]="location"
+      (click)="navigate(location.id)"
+    ></app-location-list-item>
+  </ng-container>
+</div>
+
+<app-pagination
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChange)="onPageChange($event)"
+></app-pagination>
