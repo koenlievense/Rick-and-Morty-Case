@@ -5,6 +5,8 @@ import { LocationListComponent } from './components/location/list/location-list.
 import { EpisodeListComponent } from './components/episodes/list/episode-list.component';
 import { LocationDetailComponent } from './components/location/detail/location-detail.component';
 import { EpisodeDetailComponent } from './components/episodes/detail/episode-detail.component';
+import { DimensionListComponent } from './components/dimension/list/dimension-list.component';
+import { DimensionDetailComponent } from './components/dimension/detail/dimension-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/characters', pathMatch: 'full' },
@@ -13,6 +15,8 @@ const routes: Routes = [
   { path: 'locations/:id', component: LocationDetailComponent },
   { path: 'episodes', component: EpisodeListComponent },
   { path: 'episodes/:id', component: EpisodeDetailComponent },
+  { path: 'dimensions', component: DimensionListComponent },
+  { path: 'dimensions/:name', component: DimensionDetailComponent },
 ];
 
 @NgModule({
