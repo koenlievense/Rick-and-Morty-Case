@@ -27,14 +27,13 @@ export class DimensionDetailComponent {
   ngOnInit(): void {
     this.loading = true;
     this.dimensions = this.dimensionService.loadDimensions(this.currentPage);
-    console.log(this.dimensions, 'detail');
 
     if (this.dimensions) {
       this.route.paramMap.subscribe((params) => {
         const nameParam = params.get('name');
         this.dimension = this.dimensions.find(
           (dimension) =>
-            dimension.name.toLowerCase().replace(/ /g, '-') === nameParam
+            dimension.name.toLowerCase().replace(' ', '-') === nameParam
         );
 
         if (this.dimension) {

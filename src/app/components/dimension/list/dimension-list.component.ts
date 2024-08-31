@@ -21,9 +21,6 @@ export class DimensionListComponent {
   }
 
   navigate(name: string): void {
-    this.router.navigate([
-      '/dimensions',
-      name.toLowerCase().replace(/ /g, '-'),
-    ]);
+    this.router.navigate(['/dimensions', name.toLowerCase().replace(' ', '-')]);
   }
 }
