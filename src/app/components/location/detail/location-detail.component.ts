@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 import { LocationService } from '../../../shared/services/location.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CharacterService } from '../../../shared/services/character.service';
-import { Character } from '../../../shared/interfaces/character';
 import { Location } from '../../../shared/interfaces/location';
+import { CharacterWithDimension } from '../../../shared/interfaces/character-with-dimension';
 
 @Component({
   selector: 'app-location-detail',
   templateUrl: './location-detail.component.html',
 })
 export class LocationDetailComponent {
-  characters: Character[] = [];
+  characters: CharacterWithDimension[] = [];
   location: Location;
   locationId: number | null = null;
 
@@ -39,7 +39,7 @@ export class LocationDetailComponent {
 
             if (ids.length > 0) {
               this.characterService
-                .fetchCharactersByIds(ids)
+                .fetchCharactersByIdsWithDimensions(ids)
                 .subscribe((characters) => {
                   if (Array.isArray(characters)) {
                     this.characters = characters;

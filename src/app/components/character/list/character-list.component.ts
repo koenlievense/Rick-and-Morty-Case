@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CharacterService } from '../../../shared/services/character.service';
-import { Character } from '../../../shared/interfaces/character';
 import { HttpParams } from '@angular/common/http';
+import { CharacterWithDimension } from '../../../shared/interfaces/character-with-dimension';
 
 @Component({
   selector: 'app-character-list',
   templateUrl: './character-list.component.html',
 })
 export class CharacterListComponent implements OnInit {
-  characters: Character[] = [];
+  characters: CharacterWithDimension[] = [];
   currentPage: number = 1;
   totalPages: number = 1;
 
@@ -20,10 +20,12 @@ export class CharacterListComponent implements OnInit {
 
   loadCharacters(): void {
     let params = new HttpParams().set('page', this.currentPage.toString());
-    this.characterService.fetchCharacters(params).subscribe((response) => {
-      this.characters = response.results;
-      this.totalPages = response.info.pages;
-    });
+    this.characterService
+      .fetchCharactersWithDimensions(params)
+      .subscribe((response) => {
+        this.characters = response.results;
+        this.totalPages = response.info.pages;
+      });
   }
 
   onPageChange(newPage: number): void {

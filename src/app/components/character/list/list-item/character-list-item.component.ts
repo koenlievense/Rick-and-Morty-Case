@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Character } from '../../../../shared/interfaces/character';
+import { CharacterWithDimension } from '../../../../shared/interfaces/character-with-dimension';
 
 @Component({
   selector: 'app-character-list-item',
@@ -7,5 +7,5 @@ import { Character } from '../../../../shared/interfaces/character';
 })
 export class CharacterListItemComponent {
   @Input()
-  character: Character;
+  character: CharacterWithDimension;
 }

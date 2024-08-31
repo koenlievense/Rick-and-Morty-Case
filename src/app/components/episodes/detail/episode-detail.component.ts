@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CharacterService } from '../../../shared/services/character.service';
-import { Character } from '../../../shared/interfaces/character';
 import { EpisodeService } from '../../../shared/services/episode.service';
 import { Episode } from '../../../shared/interfaces/episode';
+import { CharacterWithDimension } from '../../../shared/interfaces/character-with-dimension';
 
 @Component({
   selector: 'app-episode-detail',
   templateUrl: './episode-detail.component.html',
 })
 export class EpisodeDetailComponent {
-  characters: Character[] = [];
+  characters: CharacterWithDimension[] = [];
   episode: Episode;
   episodeId: number | null = null;
 
@@ -39,7 +39,7 @@ export class EpisodeDetailComponent {
 
             if (ids.length > 0) {
               this.characterService
-                .fetchCharactersByIds(ids)
+                .fetchCharactersByIdsWithDimensions(ids)
                 .subscribe((characters) => {
                   if (Array.isArray(characters)) {
                     this.characters = characters;

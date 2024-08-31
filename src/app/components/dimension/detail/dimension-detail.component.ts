@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CharacterService } from '../../../shared/services/character.service';
-import { Character } from '../../../shared/interfaces/character';
 import { Dimension } from '../../../shared/interfaces/dimension';
 import { DimensionService } from '../../../shared/services/dimension.service';
 import { Observable } from 'rxjs';
+import { CharacterWithDimension } from '../../../shared/interfaces/character-with-dimension';
 
 @Component({
   selector: 'app-dimension-detail',
@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 export class DimensionDetailComponent {
   dimensions$: Observable<Dimension[]>;
   dimension: Dimension | undefined;
-  characters: Character[] = [];
+  characters: CharacterWithDimension[] = [];
   charactersIdList: number[] = [];
   currentPage: number = 1;
   loading: boolean;
@@ -43,7 +43,7 @@ export class DimensionDetailComponent {
 
           if (this.charactersIdList.length !== 0) {
             this.characterService
-              .fetchCharactersByIds(this.charactersIdList)
+              .fetchCharactersByIdsWithDimensions(this.charactersIdList)
               .subscribe((characters) => {
                 if (Array.isArray(characters)) {
                   this.characters = characters;
