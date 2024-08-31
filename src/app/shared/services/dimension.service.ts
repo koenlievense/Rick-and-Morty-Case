@@ -2,7 +2,6 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LocationService } from './location.service';
 import { Dimension } from '../interfaces/dimension';
-import { Character } from '../interfaces/character';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +9,6 @@ import { Character } from '../interfaces/character';
 export class DimensionService {
   dimensions: Dimension[] = [];
   totalPages: number = 1;
-  nextDimensionId: number = 1;
 
   constructor(private locationService: LocationService) {}
 
@@ -25,7 +23,6 @@ export class DimensionService {
         if (!dimension) {
           // Create a new dimension object if it doesn't exist
           dimension = {
-            id: this.nextDimensionId++,
             name: location.dimension,
             characters: new Set<number>(),
             locations: [],
