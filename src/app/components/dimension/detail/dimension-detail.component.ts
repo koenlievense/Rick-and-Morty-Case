@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { LocationService } from '../../../shared/services/location.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CharacterService } from '../../../shared/services/character.service';
 import { Character } from '../../../shared/interfaces/character';
-import { HttpParams } from '@angular/common/http';
 import { Dimension } from '../../../shared/interfaces/dimension';
 import { DimensionService } from '../../../shared/services/dimension.service';
 
@@ -29,6 +27,7 @@ export class DimensionDetailComponent {
   ngOnInit(): void {
     this.loading = true;
     this.dimensions = this.dimensionService.loadDimensions(this.currentPage);
+    console.log(this.dimensions, 'detail');
 
     if (this.dimensions) {
       this.route.paramMap.subscribe((params) => {

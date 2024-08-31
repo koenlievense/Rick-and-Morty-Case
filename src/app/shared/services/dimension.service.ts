@@ -19,7 +19,7 @@ export class DimensionService {
     this.locationService.fetchLocations(params).subscribe((response) => {
       response.results.forEach((location) => {
         let dimension = this.dimensions.find(
-          (d) => d.name === location.dimension
+          (dimension) => dimension.name === location.dimension
         );
 
         if (!dimension) {

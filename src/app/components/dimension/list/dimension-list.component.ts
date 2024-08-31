@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { LocationService } from '../../../shared/services/location.service';
-import { HttpParams } from '@angular/common/http';
 import { Dimension } from '../../../shared/interfaces/dimension';
 import { Router } from '@angular/router';
 import { DimensionService } from '../../../shared/services/dimension.service';
