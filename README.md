@@ -1,4 +1,4 @@
-# RickAndMortyCase
+# Rick and Morty Case
 
 This project is a web application that allows users to explore various aspects of the Rick and Morty universe. You can view characters based on their dimensions, locations, and episodes, and see detailed information about each character.
 
@@ -9,11 +9,10 @@ This project is a web application that allows users to explore various aspects o
 - Episodes Overview: Discover all episodes of Rick and Morty. Click on an episode to see a list of characters who participated in that episode.
 - Dimensions Overview: View all dimensions in the Rick and Morty universe. Selecting a dimension displays a list of characters that exist or were last seen in that dimension.
 
-## Technologies Used
+## Technologies used
 
 - Angular: Framework for building the web application.
 - TypeScript: Superset of JavaScript for writing typed, maintainable code.
-- RxJS: Reactive programming library for asynchronous data streams.
 - Tailwind CSS: Utility-first CSS framework for rapidly building custom user interfaces.
 
 ## Development server
