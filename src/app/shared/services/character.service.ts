@@ -61,6 +61,13 @@ export class CharacterService {
     );
   }
 
+  extractCharacterIds(characterUrls: string[]): number[] {
+    return characterUrls.map((characterUrl) => {
+      const match = characterUrl.match(/\d+$/)!;
+      return parseInt(match[0], 10);
+    });
+  }
+
   private addDimensionsToCharacters(
     characters: Character[]
   ): Observable<CharacterWithDimension[]> {
