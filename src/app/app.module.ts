@@ -14,7 +14,7 @@ import { EpisodeListItemComponent } from './components/episodes/list/list-item/e
 import { HeaderComponent } from './components/header/header.component';
 import { LocationDetailComponent } from './components/location/detail/location-detail.component';
 import { EpisodeDetailComponent } from './components/episodes/detail/episode-detail.component';
-import { PaginationComponent } from './components/pagination/pagination.component';
+import { PaginationComponent } from './components/shared/pagination/pagination.component';
 import { DimensionListComponent } from './components/dimension/list/dimension-list.component';
 import { DimensionListItemComponent } from './components/dimension/list/list-item/dimension-list-item.component';
 import { DimensionDetailComponent } from './components/dimension/detail/dimension-detail.component';
