@@ -71,7 +71,17 @@ export class CharacterService {
   private addDimensionsToCharacters(
     characters: Character[]
   ): Observable<CharacterWithDimension[]> {
-    const characterRequests = characters.map((character) =>
+    let characterArray: Character[] = [];
+
+    if (Array.isArray(characters)) {
+      characterArray = characters;
+    } else if (characters) {
+      characterArray = [characters];
+    } else {
+      characterArray = [];
+    }
+
+    const characterRequests = characterArray.map((character) =>
       this.locationService
         .fetchLocationById(this.extractIdFromUrl(character.location.url))
         .pipe(
