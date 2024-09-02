@@ -15,6 +15,12 @@ This project is a web application that allows users to explore various aspects o
 - TypeScript: Superset of JavaScript for writing typed, maintainable code.
 - Tailwind CSS: Utility-first CSS framework for rapidly building custom user interfaces.
 
+## Bonus points
+
+- Use latest features available in the development language
+- UI: Responsive and mobile first
+- Unit tests for services
+
 ## Development server
 
 1. Run `npm install` to install dependencies.
