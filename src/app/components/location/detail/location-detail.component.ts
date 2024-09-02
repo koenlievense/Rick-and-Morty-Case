@@ -22,39 +22,51 @@ export class LocationDetailComponent {
   ) {}
 
   ngOnInit(): void {
+    this.initializeLocationId();
+  }
+
+  private initializeLocationId(): void {
     this.route.paramMap.subscribe((params) => {
       const idParam = params.get('id');
       this.locationId = idParam !== null ? Number(idParam) : null;
 
       if (this.locationId !== null) {
-        this.locationService
-          .fetchLocationById(this.locationId)
-          .subscribe((location) => {
-            this.location = location;
-
-            const ids = location.residents.map((c) => {
-              const match = c.match(/\d+$/)!;
-              return parseInt(match[0], 10);
-            });
-
-            if (ids.length > 0) {
-              this.characterService
-                .fetchCharactersByIdsWithDimensions(ids)
-                .subscribe((characters) => {
-                  if (Array.isArray(characters)) {
-                    this.characters = characters;
-                  } else if (characters && typeof characters === 'object') {
-                    this.characters = [characters];
-                  } else {
-                    this.characters = [];
-                  }
-                });
-            } else {
-              this.characters = [];
-            }
-          });
+        this.loadLocationData();
       }
     });
+  }
+
+  private loadLocationData(): void {
+    if (this.locationId === null) return;
+
+    this.locationService
+      .fetchLocationById(this.locationId)
+      .subscribe((location) => {
+        this.location = location;
+        const ids = this.characterService.extractCharacterIds(
+          location.residents
+        );
+
+        if (ids.length > 0) {
+          this.loadCharacters(ids);
+        } else {
+          this.characters = [];
+        }
+      });
+  }
+
+  private loadCharacters(ids: number[]): void {
+    this.characterService
+      .fetchCharactersByIdsWithDimensions(ids)
+      .subscribe((characters) => {
+        if (Array.isArray(characters)) {
+          this.characters = characters;
+        } else if (characters && typeof characters === 'object') {
+          this.characters = [characters];
+        } else {
+          this.characters = [];
+        }
+      });
   }
 
   goBack() {

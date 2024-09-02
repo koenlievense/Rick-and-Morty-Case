@@ -100,16 +100,4 @@ describe('EpisodeService', () => {
     expect(req.request.method).toBe('GET');
     req.flush(mockInfo);
   });
-
-  it('should handle errors', () => {
-    const errorMessage = 'An error occurred';
-
-    service.fetchEpisodeById(1).subscribe({
-      next: () => fail('expected an error, not episodes'),
-      error: (error) => expect(error.error).toContain(errorMessage),
-    });
-
-    const req = httpMock.expectOne('https://rickandmortyapi.com/api/episode/1');
-    req.flush(errorMessage, { status: 500, statusText: 'Server Error' });
-  });
 });

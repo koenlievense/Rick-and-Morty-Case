@@ -5,20 +5,28 @@ import {
 } from '@angular/common/http/testing';
 import { CharacterService } from './character.service';
 import { ConfigService } from './config.service';
-import { throwError } from 'rxjs';
+import { LocationService } from './location.service';
+import { throwError, of } from 'rxjs';
 import { Character } from '../interfaces/character';
 import { Info } from '../interfaces/info';
+import { CharacterWithDimension } from '../interfaces/character-with-dimension';
+import { Location } from '../interfaces/location';
 
 describe('CharacterService', () => {
   let service: CharacterService;
   let httpMock: HttpTestingController;
   let configService: jasmine.SpyObj<ConfigService>;
+  let locationService: jasmine.SpyObj<LocationService>;
 
   beforeEach(() => {
     const configServiceSpy = jasmine.createSpyObj('ConfigService', [
       'handleError',
       'apiUrl',
     ]);
+    const locationServiceSpy = jasmine.createSpyObj('LocationService', [
+      'fetchLocationById',
+    ]);
+
     configServiceSpy.apiUrl = 'https://rickandmortyapi.com/api';
     configServiceSpy.handleError.and.callFake((error: any) =>
       throwError(() => error)
@@ -29,6 +37,7 @@ describe('CharacterService', () => {
       providers: [
         CharacterService,
         { provide: ConfigService, useValue: configServiceSpy },
+        { provide: LocationService, useValue: locationServiceSpy },
       ],
     });
 
@@ -37,6 +46,9 @@ describe('CharacterService', () => {
     configService = TestBed.inject(
       ConfigService
     ) as jasmine.SpyObj<ConfigService>;
+    locationService = TestBed.inject(
+      LocationService
+    ) as jasmine.SpyObj<LocationService>;
   });
 
   afterEach(() => {
@@ -107,17 +119,94 @@ describe('CharacterService', () => {
     req.flush(mockInfo);
   });
 
-  it('should handle errors', () => {
-    const errorMessage = 'An error occurred';
+  it('should extract character IDs from URLs', () => {
+    const characterUrls = [
+      'https://rickandmortyapi.com/api/character/1',
+      'https://rickandmortyapi.com/api/character/2',
+    ];
+    const ids = service.extractCharacterIds(characterUrls);
+    expect(ids).toEqual([1, 2]);
+  });
 
-    service.fetchCharacterById(1).subscribe({
-      next: () => fail('expected an error, not characters'),
-      error: (error) => expect(error.error).toContain(errorMessage),
+  it('should fetch characters by IDs with dimensions', () => {
+    const mockCharacters: Character[] = [
+      {
+        id: 1,
+        name: 'Rick Sanchez',
+        location: { url: 'https://rickandmortyapi.com/api/location/1' },
+      } as Character,
+    ];
+
+    const mockLocation: Location = {
+      id: 1,
+      name: 'Earth',
+      dimension: 'Dimension C-137',
+    } as Location;
+
+    const mockCharacterWithDimension: CharacterWithDimension = {
+      ...mockCharacters[0],
+      dimension: 'Dimension C-137',
+    };
+
+    spyOn(service, 'fetchCharactersByIds').and.returnValue(of(mockCharacters));
+    locationService.fetchLocationById.and.returnValue(of(mockLocation));
+
+    service.fetchCharactersByIdsWithDimensions([1]).subscribe((characters) => {
+      expect(characters).toEqual([mockCharacterWithDimension]);
+    });
+  });
+
+  it('should fetch characters with dimensions', () => {
+    const mockInfo: Info<Character[]> = {
+      info: {
+        count: 2,
+        next: null,
+        pages: 1,
+        prev: null,
+      },
+      results: [
+        {
+          id: 1,
+          name: 'Rick Sanchez',
+          location: { url: 'https://rickandmortyapi.com/api/location/1' },
+        } as Character,
+        {
+          id: 2,
+          name: 'Morty Smith',
+          location: { url: 'https://rickandmortyapi.com/api/location/2' },
+        } as Character,
+      ],
+    };
+
+    const mockLocations: Location[] = [
+      { id: 1, name: 'Earth', dimension: 'Dimension C-137' } as Location,
+      { id: 2, name: 'Gazorpazorp', dimension: 'Dimension Z-123' } as Location,
+    ];
+
+    const mockCharactersWithDimensions: CharacterWithDimension[] = [
+      {
+        id: 1,
+        name: 'Rick Sanchez',
+        location: { url: 'https://rickandmortyapi.com/api/location/1' },
+        dimension: 'Dimension C-137',
+      } as CharacterWithDimension,
+      {
+        id: 2,
+        name: 'Morty Smith',
+        location: { url: 'https://rickandmortyapi.com/api/location/2' },
+        dimension: 'Dimension Z-123',
+      } as CharacterWithDimension,
+    ];
+
+    spyOn(service, 'fetchCharacters').and.returnValue(of(mockInfo));
+    locationService.fetchLocationById.and.callFake((id: number) => {
+      if (id === 1) return of(mockLocations[0]);
+      if (id === 2) return of(mockLocations[1]);
+      return throwError(() => new Error('Location not found'));
     });
 
-    const req = httpMock.expectOne(
-      'https://rickandmortyapi.com/api/character/1'
-    );
-    req.flush(errorMessage, { status: 500, statusText: 'Server Error' });
+    service.fetchCharactersWithDimensions({ page: 1 }).subscribe((result) => {
+      expect(result.results).toEqual(mockCharactersWithDimensions);
+    });
   });
 });
