@@ -1,0 +1,85 @@
+<ng-container *ngIf="character">
+  <div class="grid grid-cols-3 items-center mb-6">
+    <div class="flex">
+      <button
+        class="back-button px-4 py-2 bg-gray-300 text-gray-700 rounded"
+        (click)="goBack()"
+      >
+        Back
+      </button>
+    </div>
+  </div>
+
+  <div class="container mx-auto my-10">
+    <div class="bg-white rounded-lg shadow-lg p-8">
+      <div class="flex flex-col md:flex-row items-center mb-8">
+        <img
+          class="w-48 h-48 rounded-full border-4 border-gray-300 object-cover"
+          [src]="character.image"
+          [alt]="character.name"
+        />
+        <div class="mt-6 md:mt-0 md:ml-8 text-center md:text-left">
+          <h1 class="text-4xl font-bold">{{ character.name }}</h1>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <h2 class="text-2xl font-semibold mb-4">Character Info</h2>
+          <div class="grid grid-cols-1 gap-4">
+            <div class="bg-gray-100 p-4 rounded-lg shadow">
+              <p class="text-lg font-semibold">Species</p>
+              <p class="text-gray-700">{{ character.species }}</p>
+            </div>
+            <div class="bg-gray-100 p-4 rounded-lg shadow">
+              <p class="text-lg font-semibold">Gender</p>
+              <p class="text-gray-700">{{ character.gender }}</p>
+            </div>
+            <div class="bg-gray-100 p-4 rounded-lg shadow">
+              <p class="text-lg font-semibold">Status</p>
+              <p class="text-gray-700">{{ character.status }}</p>
+            </div>
+            <div class="bg-gray-100 p-4 rounded-lg shadow">
+              <p class="text-lg font-semibold">Location</p>
+              <p class="text-gray-700">{{ character.location.name }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="text-2xl font-semibold mb-4">Additional Info</h2>
+          <div class="grid grid-cols-1 gap-4">
+            <div class="bg-gray-100 p-4 rounded-lg shadow">
+              <p class="text-lg font-semibold">Origin</p>
+              <p class="text-gray-700">{{ character.origin.name }}</p>
+            </div>
+            <div class="bg-gray-100 p-4 rounded-lg shadow">
+              <p class="text-lg font-semibold">Dimension</p>
+              <p class="text-gray-700">{{ character.dimension }}</p>
+            </div>
+            <div class="bg-gray-100 p-4 rounded-lg shadow">
+              <p class="text-lg font-semibold">Created On</p>
+              <p class="text-gray-700">{{ character.created | date }}</p>
+            </div>
+            <div class="bg-gray-100 p-4 rounded-lg shadow">
+              <p class="text-lg font-semibold">Type</p>
+              <p class="text-gray-700">{{ character.type || "Unknown" }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10">
+        <h2 class="text-2xl font-semibold mb-4">Episodes</h2>
+        <!-- @todo add pagination to episode list -->
+        <ul class="list-decimal list-inside">
+          <li *ngFor="let episode of character.episode; let i = index">
+            <a [href]="episode" class="text-blue-500 underline"
+              >Episode {{ i + 1 }}</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CharacterService } from '../../../shared/services/character.service';
 import { HttpParams } from '@angular/common/http';
 import { CharacterWithDimension } from '../../../shared/interfaces/character-with-dimension';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-character-list',
@@ -12,7 +13,10 @@ export class CharacterListComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
 
-  constructor(private characterService: CharacterService) {}
+  constructor(
+    private characterService: CharacterService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadCharacters();
@@ -31,5 +35,9 @@ export class CharacterListComponent implements OnInit {
   onPageChange(newPage: number): void {
     this.currentPage = newPage;
     this.loadCharacters();
+  }
+
+  navigate(id: number): void {
+    this.router.navigate(['/characters', id]);
   }
 }

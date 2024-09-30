@@ -18,6 +18,7 @@ import { PaginationComponent } from './components/shared/pagination/pagination.c
 import { DimensionListComponent } from './components/dimension/list/dimension-list.component';
 import { DimensionListItemComponent } from './components/dimension/list/list-item/dimension-list-item.component';
 import { DimensionDetailComponent } from './components/dimension/detail/dimension-detail.component';
+import { CharacterDetailComponent } from './components/character/detail/character-detail.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { DimensionDetailComponent } from './components/dimension/detail/dimensio
     HeaderComponent,
     CharacterListComponent,
     CharacterListItemComponent,
+    CharacterDetailComponent,
     LocationListComponent,
     LocationListItemComponent,
     LocationDetailComponent,

@@ -7,10 +7,12 @@ import { LocationDetailComponent } from './components/location/detail/location-d
 import { EpisodeDetailComponent } from './components/episodes/detail/episode-detail.component';
 import { DimensionListComponent } from './components/dimension/list/dimension-list.component';
 import { DimensionDetailComponent } from './components/dimension/detail/dimension-detail.component';
+import { CharacterDetailComponent } from './components/character/detail/character-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/characters', pathMatch: 'full' },
   { path: 'characters', component: CharacterListComponent },
+  { path: 'characters/:id', component: CharacterDetailComponent },
   { path: 'locations', component: LocationListComponent },
   { path: 'locations/:id', component: LocationDetailComponent },
   { path: 'episodes', component: EpisodeListComponent },
