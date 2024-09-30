@@ -1,15 +1,24 @@
-<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-  <ng-container *ngFor="let episode of episodes">
-    <app-episode-list-item
-      class="flex justify-center"
-      [episode]="episode"
-      (click)="navigate(episode.id)"
-    ></app-episode-list-item>
-  </ng-container>
-</div>
+<ng-container *ngIf="loading; else showContent">
+  <div class="flex flex-col justify-center items-center">
+    <img class="max-w-96" src="/assets/loading.png" />
+    <span class="text-2xl">Loading</span>
+  </div>
+</ng-container>
 
-<app-pagination
-  [currentPage]="currentPage"
-  [totalPages]="totalPages"
-  (pageChange)="onPageChange($event)"
-></app-pagination>
+<ng-template #showContent>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+    <ng-container *ngFor="let episode of paginatedEpisodes">
+      <app-episode-list-item
+        class="flex justify-center"
+        [episode]="episode"
+        (click)="navigate(episode.id)"
+      ></app-episode-list-item>
+    </ng-container>
+  </div>
+
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChange)="onPageChange($event)"
+  ></app-pagination>
+</ng-template>

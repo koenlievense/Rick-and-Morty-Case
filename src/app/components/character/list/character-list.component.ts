@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CharacterService } from '../../../shared/services/character.service';
-import { HttpParams } from '@angular/common/http';
 import { CharacterWithDimension } from '../../../shared/interfaces/character-with-dimension';
 import { Router } from '@angular/router';
 
@@ -10,8 +9,11 @@ import { Router } from '@angular/router';
 })
 export class CharacterListComponent implements OnInit {
   characters: CharacterWithDimension[] = [];
+  itemsPerPage: number = 20;
   currentPage: number = 1;
+  paginatedCharacters: any[] = [];
   totalPages: number = 1;
+  loading: boolean;
 
   constructor(
     private characterService: CharacterService,
@@ -19,22 +21,27 @@ export class CharacterListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadCharacters();
+    this.loading = true;
+
+    this.characterService
+      .loadCharacters(this.currentPage)
+      .subscribe((characters) => {
+        this.characters = characters;
+        this.totalPages = Math.ceil(this.characters.length / this.itemsPerPage);
+        this.updatePaginatedItems();
+        this.loading = false;
+      });
   }
 
-  loadCharacters(): void {
-    let params = new HttpParams().set('page', this.currentPage.toString());
-    this.characterService
-      .fetchCharactersWithDimensions(params)
-      .subscribe((response) => {
-        this.characters = response.results;
-        this.totalPages = response.info.pages;
-      });
+  updatePaginatedItems() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedCharacters = this.characters.slice(startIndex, endIndex);
   }
 
   onPageChange(newPage: number): void {
     this.currentPage = newPage;
-    this.loadCharacters();
+    this.updatePaginatedItems();
   }
 
   navigate(id: number): void {

@@ -1,11 +1,24 @@
-<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-  <ng-container *ngIf="dimensions$ | async as dimensions">
-    <ng-container *ngFor="let dimension of dimensions">
+<ng-container *ngIf="loading; else showContent">
+  <div class="flex flex-col justify-center items-center">
+    <img class="max-w-96" src="/assets/loading.png" />
+    <span class="text-2xl">Loading</span>
+  </div>
+</ng-container>
+
+<ng-template #showContent>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+    <ng-container *ngFor="let dimension of paginatedDimensions">
       <app-dimension-list-item
         class="flex justify-center"
         [dimension]="dimension"
         (click)="navigate(dimension.name)"
       ></app-dimension-list-item>
     </ng-container>
-  </ng-container>
-</div>
+  </div>
+
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChange)="onPageChange($event)"
+  ></app-pagination>
+</ng-template>

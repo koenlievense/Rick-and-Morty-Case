@@ -1,8 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocationService } from '../../../shared/services/location.service';
 import { Location } from '../../../shared/interfaces/location';
 import { Router } from '@angular/router';
-import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-location-list',
@@ -10,8 +9,11 @@ import { HttpParams } from '@angular/common/http';
 })
 export class LocationListComponent implements OnInit {
   locations: Location[] = [];
+  itemsPerPage: number = 20;
   currentPage: number = 1;
+  paginatedLocations: any[] = [];
   totalPages: number = 1;
+  loading: boolean;
 
   constructor(
     private locationService: LocationService,
@@ -19,20 +21,26 @@ export class LocationListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadLocations();
-  }
+    this.loading = true;
 
-  loadLocations(): void {
-    let params = new HttpParams().set('page', this.currentPage.toString());
-    this.locationService.fetchLocations(params).subscribe((response) => {
-      this.locations = response.results;
-      this.totalPages = response.info.pages;
-    });
+    this.locationService
+      .loadLocations(this.currentPage)
+      .subscribe((locations) => {
+        this.locations = locations;
+        this.totalPages = Math.ceil(this.locations.length / this.itemsPerPage);
+        this.updatePaginatedItems();
+        this.loading = false;
+      });
+  }
+  updatePaginatedItems() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedLocations = this.locations.slice(startIndex, endIndex);
   }
 
   onPageChange(newPage: number): void {
     this.currentPage = newPage;
-    this.loadLocations();
+    this.updatePaginatedItems();
   }
 
   navigate(id: number): void {

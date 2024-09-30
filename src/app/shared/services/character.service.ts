@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { forkJoin, Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { forkJoin, Observable, of, switchMap, tap } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Character } from '../interfaces/character';
 import { Info } from '../interfaces/info';
@@ -12,6 +12,9 @@ import { CharacterWithDimension } from '../interfaces/character-with-dimension';
   providedIn: 'root',
 })
 export class CharacterService {
+  characters: CharacterWithDimension[] = [];
+  totalPages: number = 1;
+
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
@@ -66,6 +69,31 @@ export class CharacterService {
       const match = characterUrl.match(/\d+$/)!;
       return parseInt(match[0], 10);
     });
+  }
+
+  loadCharacters(page: number): Observable<CharacterWithDimension[]> {
+    const params = new HttpParams().set('page', page.toString());
+    return this.fetchCharactersWithDimensions(params).pipe(
+      tap((response) => {
+        response.results.forEach((characterResponse) => {
+          const exists = this.characters.some(
+            (character) => character.id === characterResponse.id
+          );
+
+          if (!exists) {
+            this.characters.push(characterResponse);
+          }
+        });
+
+        this.totalPages = response.info.pages;
+      }),
+      switchMap(() => {
+        if (page < this.totalPages) {
+          return this.loadCharacters(page + 1);
+        }
+        return of(this.characters);
+      })
+    );
   }
 
   private addDimensionsToCharacters(

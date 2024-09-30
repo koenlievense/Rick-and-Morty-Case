@@ -1,15 +1,24 @@
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-  <ng-container *ngFor="let character of characters">
-    <app-character-list-item
-      class="flex justify-center"
-      [character]="character"
-      (click)="navigate(character.id)"
-    ></app-character-list-item>
-  </ng-container>
-</div>
+<ng-container *ngIf="loading; else showContent">
+  <div class="flex flex-col justify-center items-center">
+    <img class="max-w-96" src="/assets/loading.png" />
+    <span class="text-2xl">Loading</span>
+  </div>
+</ng-container>
 
-<app-pagination
-  [currentPage]="currentPage"
-  [totalPages]="totalPages"
-  (pageChange)="onPageChange($event)"
-></app-pagination>
+<ng-template #showContent>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <ng-container *ngFor="let character of paginatedCharacters">
+      <app-character-list-item
+        class="flex justify-center"
+        [character]="character"
+        (click)="navigate(character.id)"
+      ></app-character-list-item>
+    </ng-container>
+  </div>
+
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChange)="onPageChange($event)"
+  ></app-pagination>
+</ng-template>
