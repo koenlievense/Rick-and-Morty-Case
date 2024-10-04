@@ -11,7 +11,7 @@ export class EpisodeListComponent implements OnInit {
   episodes: Episode[] = [];
   itemsPerPage: number = 20;
   currentPage: number = 1;
-  paginatedEpisodes: any[] = [];
+  paginatedEpisodes: Episode[] = [];
   totalPages: number = 1;
   loading: boolean;
 
@@ -27,11 +27,6 @@ export class EpisodeListComponent implements OnInit {
       this.loading = false;
     });
   }
-  updatePaginatedItems() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedEpisodes = this.episodes.slice(startIndex, endIndex);
-  }
 
   onPageChange(newPage: number): void {
     this.currentPage = newPage;
@@ -40,5 +35,11 @@ export class EpisodeListComponent implements OnInit {
 
   navigate(id: number): void {
     this.router.navigate(['/episodes', id]);
+  }
+
+  private updatePaginatedItems() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedEpisodes = this.episodes.slice(startIndex, endIndex);
   }
 }

@@ -11,7 +11,7 @@ export class DimensionListComponent implements OnInit {
   dimensions: Dimension[] = [];
   itemsPerPage: number = 20;
   currentPage: number = 1;
-  paginatedDimensions: any[] = [];
+  paginatedDimensions: Dimension[] = [];
   totalPages: number = 1;
   loading: boolean;
 
@@ -33,12 +33,6 @@ export class DimensionListComponent implements OnInit {
       });
   }
 
-  updatePaginatedItems() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedDimensions = this.dimensions.slice(startIndex, endIndex);
-  }
-
   onPageChange(newPage: number): void {
     this.currentPage = newPage;
     this.updatePaginatedItems();
@@ -46,5 +40,11 @@ export class DimensionListComponent implements OnInit {
 
   navigate(name: string): void {
     this.router.navigate(['/dimensions', name.toLowerCase().replace(' ', '-')]);
+  }
+
+  private updatePaginatedItems() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedDimensions = this.dimensions.slice(startIndex, endIndex);
   }
 }

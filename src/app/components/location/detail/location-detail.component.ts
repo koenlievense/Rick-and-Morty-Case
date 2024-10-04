@@ -13,6 +13,11 @@ export class LocationDetailComponent {
   characters: CharacterWithDimension[] = [];
   location: Location;
   locationId: number | null = null;
+  itemsPerPage: number = 20;
+  currentPage: number = 1;
+  paginatedCharacters: CharacterWithDimension[] = [];
+  totalPages: number = 1;
+  loading: boolean;
 
   constructor(
     private locationService: LocationService,
@@ -25,7 +30,18 @@ export class LocationDetailComponent {
     this.initializeLocationId();
   }
 
+  onPageChange(newPage: number): void {
+    this.currentPage = newPage;
+    this.updatePaginatedItems();
+  }
+
+  goBack() {
+    this.router.navigate(['/locations']);
+  }
+
   private initializeLocationId(): void {
+    this.loading = true;
+
     this.route.paramMap.subscribe((params) => {
       const idParam = params.get('id');
       this.locationId = idParam !== null ? Number(idParam) : null;
@@ -61,6 +77,11 @@ export class LocationDetailComponent {
       .subscribe((characters) => {
         if (Array.isArray(characters)) {
           this.characters = characters;
+          this.totalPages = Math.ceil(
+            this.characters.length / this.itemsPerPage
+          );
+          this.updatePaginatedItems();
+          this.loading = false;
         } else if (characters && typeof characters === 'object') {
           this.characters = [characters];
         } else {
@@ -69,7 +90,9 @@ export class LocationDetailComponent {
       });
   }
 
-  goBack() {
-    this.router.navigate(['/locations']);
+  private updatePaginatedItems() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedCharacters = this.characters.slice(startIndex, endIndex);
   }
 }

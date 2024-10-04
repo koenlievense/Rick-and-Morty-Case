@@ -21,6 +21,10 @@ export class CharacterDetailComponent {
     this.initializeCharacterId();
   }
 
+  goBack() {
+    this.router.navigate(['/characters']);
+  }
+
   private initializeCharacterId(): void {
     this.route.paramMap.subscribe((params) => {
       const idParam = params.get('id');
@@ -40,9 +44,5 @@ export class CharacterDetailComponent {
       .subscribe((character) => {
         this.character = character[0];
       });
-  }
-
-  goBack() {
-    this.router.navigate(['/characters']);
   }
 }

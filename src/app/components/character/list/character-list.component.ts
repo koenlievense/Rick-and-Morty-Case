@@ -11,7 +11,7 @@ export class CharacterListComponent implements OnInit {
   characters: CharacterWithDimension[] = [];
   itemsPerPage: number = 20;
   currentPage: number = 1;
-  paginatedCharacters: any[] = [];
+  paginatedCharacters: CharacterWithDimension[] = [];
   totalPages: number = 1;
   loading: boolean;
 
@@ -33,12 +33,6 @@ export class CharacterListComponent implements OnInit {
       });
   }
 
-  updatePaginatedItems() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedCharacters = this.characters.slice(startIndex, endIndex);
-  }
-
   onPageChange(newPage: number): void {
     this.currentPage = newPage;
     this.updatePaginatedItems();
@@ -46,5 +40,11 @@ export class CharacterListComponent implements OnInit {
 
   navigate(id: number): void {
     this.router.navigate(['/characters', id]);
+  }
+
+  private updatePaginatedItems() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedCharacters = this.characters.slice(startIndex, endIndex);
   }
 }
