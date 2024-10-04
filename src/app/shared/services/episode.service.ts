@@ -10,8 +10,8 @@ import { ConfigService } from './config.service';
   providedIn: 'root',
 })
 export class EpisodeService {
-  episodes: Episode[] = [];
-  totalPages: number = 1;
+  private episodes: Episode[] = [];
+  private totalPages: number = 1;
 
   constructor(private http: HttpClient, private configService: ConfigService) {}
 

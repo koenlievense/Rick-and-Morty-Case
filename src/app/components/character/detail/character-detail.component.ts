@@ -9,7 +9,8 @@ import { CharacterWithDimension } from '../../../shared/interfaces/character-wit
 })
 export class CharacterDetailComponent {
   character: CharacterWithDimension;
-  characterId: number | null = null;
+
+  private characterId: number | null = null;
 
   constructor(
     private characterService: CharacterService,

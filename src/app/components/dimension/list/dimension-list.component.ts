@@ -8,12 +8,13 @@ import { DimensionService } from '../../../shared/services/dimension.service';
   templateUrl: './dimension-list.component.html',
 })
 export class DimensionListComponent implements OnInit {
-  dimensions: Dimension[] = [];
-  itemsPerPage: number = 20;
   currentPage: number = 1;
   paginatedDimensions: Dimension[] = [];
   totalPages: number = 1;
   loading: boolean;
+
+  private dimensions: Dimension[] = [];
+  private itemsPerPage: number = 20;
 
   constructor(
     private dimensionService: DimensionService,

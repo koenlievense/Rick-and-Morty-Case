@@ -8,8 +8,8 @@ import { Observable, of, switchMap, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class DimensionService {
-  dimensions: Dimension[] = [];
-  totalPages: number = 1;
+  private dimensions: Dimension[] = [];
+  private totalPages: number = 1;
 
   constructor(private locationService: LocationService) {}
 

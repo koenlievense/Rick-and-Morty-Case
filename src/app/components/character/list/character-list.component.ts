@@ -8,12 +8,13 @@ import { Router } from '@angular/router';
   templateUrl: './character-list.component.html',
 })
 export class CharacterListComponent implements OnInit {
-  characters: CharacterWithDimension[] = [];
-  itemsPerPage: number = 20;
   currentPage: number = 1;
   paginatedCharacters: CharacterWithDimension[] = [];
   totalPages: number = 1;
   loading: boolean;
+
+  private characters: CharacterWithDimension[] = [];
+  private itemsPerPage: number = 20;
 
   constructor(
     private characterService: CharacterService,

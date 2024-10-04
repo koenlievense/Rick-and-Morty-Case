@@ -8,12 +8,13 @@ import { Router } from '@angular/router';
   templateUrl: './location-list.component.html',
 })
 export class LocationListComponent implements OnInit {
-  locations: Location[] = [];
-  itemsPerPage: number = 20;
   currentPage: number = 1;
   paginatedLocations: Location[] = [];
   totalPages: number = 1;
   loading: boolean;
+
+  private locations: Location[] = [];
+  private itemsPerPage: number = 20;
 
   constructor(
     private locationService: LocationService,

@@ -8,12 +8,13 @@ import { Router } from '@angular/router';
   templateUrl: './episode-list.component.html',
 })
 export class EpisodeListComponent implements OnInit {
-  episodes: Episode[] = [];
-  itemsPerPage: number = 20;
   currentPage: number = 1;
   paginatedEpisodes: Episode[] = [];
   totalPages: number = 1;
   loading: boolean;
+
+  private episodes: Episode[] = [];
+  private itemsPerPage: number = 20;
 
   constructor(private episodeService: EpisodeService, private router: Router) {}
 

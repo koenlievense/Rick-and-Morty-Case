@@ -11,13 +11,14 @@ import { CharacterWithDimension } from '../../../shared/interfaces/character-wit
 })
 export class DimensionDetailComponent {
   dimension: Dimension | undefined;
-  characters: CharacterWithDimension[] = [];
-  charactersIdList: number[] = [];
-  itemsPerPage: number = 20;
   currentPage: number = 1;
   paginatedCharacters: CharacterWithDimension[] = [];
   totalPages: number = 1;
   loading: boolean;
+
+  private characters: CharacterWithDimension[] = [];
+  private charactersIdList: number[] = [];
+  private itemsPerPage: number = 20;
 
   constructor(
     private dimensionService: DimensionService,

@@ -10,8 +10,8 @@ import { ConfigService } from './config.service';
   providedIn: 'root',
 })
 export class LocationService {
-  locations: Location[] = [];
-  totalPages: number = 1;
+  private locations: Location[] = [];
+  private totalPages: number = 1;
 
   constructor(private http: HttpClient, private configService: ConfigService) {}
 

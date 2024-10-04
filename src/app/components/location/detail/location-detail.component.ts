@@ -10,14 +10,15 @@ import { CharacterWithDimension } from '../../../shared/interfaces/character-wit
   templateUrl: './location-detail.component.html',
 })
 export class LocationDetailComponent {
-  characters: CharacterWithDimension[] = [];
   location: Location;
-  locationId: number | null = null;
-  itemsPerPage: number = 20;
   currentPage: number = 1;
   paginatedCharacters: CharacterWithDimension[] = [];
   totalPages: number = 1;
   loading: boolean;
+
+  private characters: CharacterWithDimension[] = [];
+  private locationId: number | null = null;
+  private itemsPerPage: number = 20;
 
   constructor(
     private locationService: LocationService,

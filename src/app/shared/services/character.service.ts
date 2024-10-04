@@ -12,8 +12,8 @@ import { CharacterWithDimension } from '../interfaces/character-with-dimension';
   providedIn: 'root',
 })
 export class CharacterService {
-  characters: CharacterWithDimension[] = [];
-  totalPages: number = 1;
+  private characters: CharacterWithDimension[] = [];
+  private totalPages: number = 1;
 
   constructor(
     private http: HttpClient,

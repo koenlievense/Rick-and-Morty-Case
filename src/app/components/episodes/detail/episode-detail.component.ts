@@ -10,14 +10,15 @@ import { CharacterWithDimension } from '../../../shared/interfaces/character-wit
   templateUrl: './episode-detail.component.html',
 })
 export class EpisodeDetailComponent {
-  characters: CharacterWithDimension[] = [];
   episode: Episode;
-  episodeId: number | null = null;
-  itemsPerPage: number = 20;
   currentPage: number = 1;
   paginatedCharacters: CharacterWithDimension[] = [];
   totalPages: number = 1;
   loading: boolean;
+
+  private characters: CharacterWithDimension[] = [];
+  private episodeId: number | null = null;
+  private itemsPerPage: number = 20;
 
   constructor(
     private episodeService: EpisodeService,
