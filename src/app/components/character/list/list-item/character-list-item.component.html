@@ -1,5 +1,6 @@
 <div
-  class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden m-3 w-auto lg:w-80 cursor-pointer hover:opacity-70"
+  class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden m-3 w-auto lg:w-80"
+  [class.clickable]="clickable"
 >
   <img [src]="character.image" [alt]="character.name" class="w-full h-auto" />
   <div class="p-4">

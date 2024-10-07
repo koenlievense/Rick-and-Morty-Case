@@ -72,13 +72,25 @@
       <div class="mt-10">
         <h2 class="text-2xl font-semibold mb-4">Episodes</h2>
         <!-- @todo add pagination to episode list -->
-        <ul class="list-decimal list-inside">
-          <li *ngFor="let episode of character.episode; let i = index">
-            <a [href]="episode" class="text-blue-500 underline"
-              >Episode {{ i + 1 }}</a
-            >
-          </li>
-        </ul>
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+        >
+          <ng-container
+            *ngFor="let episode of paginatedEpisodes; let i = index"
+          >
+            <div class="p-4">
+              <div class="bg-gray-100 p-4 rounded-lg shadow">
+                <p class="text-lg">{{ episode.name }}</p>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <app-pagination
+          [currentPage]="currentPage"
+          [totalPages]="totalPages"
+          (pageChange)="onPageChange($event)"
+        ></app-pagination>
       </div>
     </div>
   </div>
