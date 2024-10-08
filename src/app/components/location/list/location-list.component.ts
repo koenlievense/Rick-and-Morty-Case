@@ -22,16 +22,27 @@ export class LocationListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loading = true;
+    this.locations = JSON.parse(
+      localStorage.getItem('locations') as string
+    ) as any as Location[];
 
-    this.locationService
-      .loadLocations(this.currentPage)
-      .subscribe((locations) => {
-        this.locations = locations;
-        this.totalPages = Math.ceil(this.locations.length / this.itemsPerPage);
-        this.updatePaginatedItems();
-        this.loading = false;
-      });
+    if (!this.locations) {
+      this.loading = true;
+
+      this.locationService
+        .loadLocations(this.currentPage)
+        .subscribe((locations) => {
+          this.locations = locations;
+          this.totalPages = Math.ceil(
+            this.locations.length / this.itemsPerPage
+          );
+          this.updatePaginatedItems();
+          this.loading = false;
+        });
+    } else {
+      this.totalPages = Math.ceil(this.locations.length / this.itemsPerPage);
+      this.updatePaginatedItems();
+    }
   }
 
   onPageChange(newPage: number): void {

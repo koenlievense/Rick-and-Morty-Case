@@ -19,14 +19,25 @@ export class EpisodeListComponent implements OnInit {
   constructor(private episodeService: EpisodeService, private router: Router) {}
 
   ngOnInit(): void {
-    this.loading = true;
+    this.episodes = JSON.parse(
+      localStorage.getItem('episodes') as string
+    ) as any as Episode[];
 
-    this.episodeService.loadEpisodes(this.currentPage).subscribe((episodes) => {
-      this.episodes = episodes;
+    if (!this.episodes) {
+      this.loading = true;
+
+      this.episodeService
+        .loadEpisodes(this.currentPage)
+        .subscribe((episodes) => {
+          this.episodes = episodes;
+          this.totalPages = Math.ceil(this.episodes.length / this.itemsPerPage);
+          this.updatePaginatedItems();
+          this.loading = false;
+        });
+    } else {
       this.totalPages = Math.ceil(this.episodes.length / this.itemsPerPage);
       this.updatePaginatedItems();
-      this.loading = false;
-    });
+    }
   }
 
   onPageChange(newPage: number): void {

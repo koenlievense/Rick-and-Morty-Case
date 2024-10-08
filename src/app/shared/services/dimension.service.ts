@@ -50,6 +50,7 @@ export class DimensionService {
         if (page < this.totalPages) {
           return this.loadDimensions(page + 1);
         }
+        localStorage.setItem('dimensions', JSON.stringify(this.dimensions));
         return of(this.dimensions);
       })
     );

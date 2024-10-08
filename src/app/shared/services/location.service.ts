@@ -55,6 +55,7 @@ export class LocationService {
         if (page < this.totalPages) {
           return this.loadLocations(page + 1);
         }
+        localStorage.setItem('locations', JSON.stringify(this.locations));
         return of(this.locations);
       })
     );

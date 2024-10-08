@@ -91,6 +91,7 @@ export class CharacterService {
         if (page < this.totalPages) {
           return this.loadCharacters(page + 1);
         }
+        localStorage.setItem('characters', JSON.stringify(this.characters));
         return of(this.characters);
       })
     );

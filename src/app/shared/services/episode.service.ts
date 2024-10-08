@@ -55,6 +55,7 @@ export class EpisodeService {
         if (page < this.totalPages) {
           return this.loadEpisodes(page + 1);
         }
+        localStorage.setItem('episodes', JSON.stringify(this.episodes));
         return of(this.episodes);
       })
     );

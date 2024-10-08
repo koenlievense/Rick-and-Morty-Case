@@ -22,16 +22,27 @@ export class CharacterListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loading = true;
+    this.characters = JSON.parse(
+      localStorage.getItem('characters') as string
+    ) as any as CharacterWithDimension[];
 
-    this.characterService
-      .loadCharacters(this.currentPage)
-      .subscribe((characters) => {
-        this.characters = characters;
-        this.totalPages = Math.ceil(this.characters.length / this.itemsPerPage);
-        this.updatePaginatedItems();
-        this.loading = false;
-      });
+    if (!this.characters) {
+      this.loading = true;
+
+      this.characterService
+        .loadCharacters(this.currentPage)
+        .subscribe((characters) => {
+          this.characters = characters;
+          this.totalPages = Math.ceil(
+            this.characters.length / this.itemsPerPage
+          );
+          this.updatePaginatedItems();
+          this.loading = false;
+        });
+    } else {
+      this.totalPages = Math.ceil(this.characters.length / this.itemsPerPage);
+      this.updatePaginatedItems();
+    }
   }
 
   onPageChange(newPage: number): void {

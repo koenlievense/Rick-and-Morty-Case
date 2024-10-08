@@ -22,16 +22,27 @@ export class DimensionListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loading = true;
+    this.dimensions = JSON.parse(
+      localStorage.getItem('dimensions') as string
+    ) as any as Dimension[];
 
-    this.dimensionService
-      .loadDimensions(this.currentPage)
-      .subscribe((dimensions) => {
-        this.dimensions = dimensions;
-        this.totalPages = Math.ceil(this.dimensions.length / this.itemsPerPage);
-        this.updatePaginatedItems();
-        this.loading = false;
-      });
+    if (!this.dimensions) {
+      this.loading = true;
+
+      this.dimensionService
+        .loadDimensions(this.currentPage)
+        .subscribe((dimensions) => {
+          this.dimensions = dimensions;
+          this.totalPages = Math.ceil(
+            this.dimensions.length / this.itemsPerPage
+          );
+          this.updatePaginatedItems();
+          this.loading = false;
+        });
+    } else {
+      this.totalPages = Math.ceil(this.dimensions.length / this.itemsPerPage);
+      this.updatePaginatedItems();
+    }
   }
 
   onPageChange(newPage: number): void {
