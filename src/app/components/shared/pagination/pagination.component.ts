@@ -24,6 +24,8 @@ export class PaginationComponent {
   }
 
   onPageInputChange(): void {
+    this.currentPageInput = +this.currentPageInput;
+
     if (
       this.currentPageInput >= 1 &&
       this.currentPageInput <= this.totalPages
